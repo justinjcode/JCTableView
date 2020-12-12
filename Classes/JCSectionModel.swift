@@ -9,6 +9,8 @@ import UIKit
 
 public class JCSectionModel: NSObject {
     
+    public var headerTitle: String?
+    public var footerTitle: String?
     public var cellModelList:[JCCellModel] = []
     
 }

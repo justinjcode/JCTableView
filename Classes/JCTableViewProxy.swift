@@ -23,10 +23,10 @@ public class JCTableViewProxy: NSObject {
         return nil
     }
     
-    //根据IndexPath获取对应section model
-    public func getSectionModel(with indexPath: IndexPath) -> JCSectionModel? {
-        if indexPath.section < self.sectionList.count {
-            let sectionModel = self.sectionList[indexPath.section]
+    //根据section获取对应section model
+    public func getSectionModel(with section: NSInteger) -> JCSectionModel? {
+        if section < self.sectionList.count {
+            let sectionModel = self.sectionList[section]
             return sectionModel
         }
         return nil
@@ -39,6 +39,7 @@ extension JCTableViewProxy: UITableViewDelegate {
 
 extension JCTableViewProxy: UITableViewDataSource {
     
+    //MARK:cells
     public func numberOfSections(in tableView: UITableView) -> Int {
         return self.sectionList.count
     }
@@ -62,6 +63,17 @@ extension JCTableViewProxy: UITableViewDataSource {
             }
         }
         return UITableViewCell()
+    }
+    
+    //MARK:section header&footer
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let section = self.getSectionModel(with: section)
+        return section?.headerTitle
+    }
+    
+    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        let section = self.getSectionModel(with: section)
+        return section?.footerTitle
     }
     
 }
