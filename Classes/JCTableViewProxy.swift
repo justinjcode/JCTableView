@@ -55,10 +55,9 @@ extension JCTableViewProxy: UITableViewDataSource {
         if let cellModel = self.getCellModel(with: indexPath) {
             assert(cellModel.cellClass != nil, "[JCTableViewProxy] cellModel.cellClass should not be nil!!!")
             if let className = cellModel.cellClass {
-                if let cellClass: AnyClass = NSClassFromString(className) {
-                    if let cell = cellClass.init() as? UITableViewCell {
-                        return cell
-                    }
+                if let cellClass = NSClassFromString(className) as? UITableViewCell.Type {
+                    let cell = cellClass.init()
+                    return cell
                 }
             }
         }
