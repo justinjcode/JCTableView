@@ -115,6 +115,7 @@ extension JCTableViewProxy: UITableViewDelegate {
         if let callback = cellModel?.didSelectedCallback {
             callback()
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
@@ -138,13 +139,18 @@ extension JCTableViewProxy: UITableViewDataSource {
         if let cellModel = self.getCellModel(with: indexPath) {
             assert(cellModel.cellClass != nil, "[JCTableViewProxy] cellModel.cellClass should not be nil!!!")
             if let className = cellModel.cellClass {
-                if let cellClass = NSClassFromString(className) as? UITableViewCell.Type {
-                    let cell = cellClass.init()
-                    if let jcCell = cell as? JCTableViewCell {
-                        jcCell.model = cellModel
+                let cellId = cellModel.cellID ?? className
+                var cell = tableView.dequeueReusableCell(withIdentifier: cellId)
+                if cell == nil {
+                    if let cellClass = NSClassFromString(className) as? UITableViewCell.Type {
+                        tableView.register(cellClass, forCellReuseIdentifier: cellId)
+                        cell = cellClass.init()
                     }
-                    return cell
                 }
+                if let jcCell = cell as? JCTableViewCell {
+                    jcCell.model = cellModel
+                }
+                return cell!
             }
         }
         return UITableViewCell()

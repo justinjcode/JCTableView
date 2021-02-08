@@ -9,8 +9,9 @@ import Foundation
 
 public class JCCellModel: NSObject {
     
-    //cell class
+    /// cell class
     public var cellClass: String?
+    public var cellID: String?
     
     //data
     public var data: Any?
@@ -20,5 +21,5 @@ public class JCCellModel: NSObject {
     public var endDisplayCallback: ((JCTableViewCell?) -> Void)?
     public var heightCallback: (() -> CGFloat)?
     public var didSelectedCallback: (() -> Void)?
-    
+    public var customCallback: ((Any?) -> Void)?
 }
