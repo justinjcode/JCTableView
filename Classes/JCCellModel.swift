@@ -20,5 +20,5 @@ public class JCCellModel: NSObject {
     public var endDisplayCallback: ((JCTableViewCell?) -> Void)?
     public var heightCallback: (() -> CGFloat)?
     public var didSelectedCallback: (() -> Void)?
-    
+    public var customCallback: ((Any?) -> Void)?
 }
