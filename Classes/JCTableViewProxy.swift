@@ -8,10 +8,18 @@
 import UIKit
 
 public class JCTableViewProxy: NSObject {
+    
+    public var animated: Bool = false
     //列表数据源
     public var sectionList:[JCSectionModel] = [] {
         didSet {
-            self.tableView.reloadData()
+            if self.animated {
+                UIView.transition(with: self.tableView, duration: 0.33, options: .layoutSubviews, animations: {
+                    self.tableView.reloadData()
+                }, completion: nil)
+            } else {
+                self.tableView.reloadData()
+            }
         }
     }
     public var tableView: UITableView
